@@ -27,10 +27,17 @@ testcount = 10
 
 # set up loop for gathering comments and searching them for memes
 count = 0
-meme_found = False
+meme_found_kill = False
+
+# gathers old counts previously stored from last run
+with open ("meme_log.csv") as logfile:
+    rd = csv.reader(logfile)
+    memeCount = dict([meme, count] for meme, count in rd)
+
 with open("meme_log.csv", "w") as logfile:
     wr = csv.writer(logfile)
     while count < testcount:
+        meme_found = False
         raw_comments = list(getComments())
         # searches comments for keywords
         for comment in raw_comments:
@@ -43,16 +50,19 @@ with open("meme_log.csv", "w") as logfile:
                         if phrase in comment:
                             print("found meme")
                             meme_found = True
+                            meme_found = kill
                             # if the substring is in the comment, log the counter dictionary
                             if phrase in memeCount:
                                 memeCount[phrase] += 1
                             else:
                                 memeCount[phrase] = 1
-    
-        for phrase in memeCount:
-            print(phrase + str(memeCount[phrase]))
-            wr.writerow([phrase, memeCount[phrase]])
-        
+
         if meme_found:
+            logfile.seek(0)
+            for phrase in memeCount:
+                print(phrase + str(memeCount[phrase]))
+                wr.writerow([phrase, memeCount[phrase]])
+
+        if meme_found_kill:
             break
         #count += 1
