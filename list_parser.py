@@ -6,7 +6,7 @@ import csv
 from strash import strash
 
 with open("memes.csv") as infile:
-    rd = csv.reader(infile)
+    rd = csv.reader(infile, delimiter='\n')
     memes = list()
     for row in rd:
         memes.extend(row)
