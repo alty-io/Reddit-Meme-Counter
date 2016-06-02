@@ -1,3 +1,7 @@
+'''
+This code grabs the comments from the reddit comment stream using praw.
+'''
+
 
 import praw
 from praw.helpers import comment_stream

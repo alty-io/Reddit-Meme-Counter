@@ -3,12 +3,15 @@ This code gathers information from a csv file and utilizes the strash code
 '''
 
 import csv
-from strash import strash
+from Strash import strash
 
-with open("memes.csv") as infile:
-    rd = csv.reader(infile, delimiter='\n')
-    memes = list()
-    for row in rd:
-        memes.extend(row)
+def listParser(filename):
+    with open(filename) as infile:
+        rd = csv.reader(infile, delimiter='\n')
+        memes = list()
+        for row in rd:
+            memes.extend(row)
 
-hashed_memes = strash(memes)
+        hashed_memes = strash(memes)
+
+    return hashed_memes
