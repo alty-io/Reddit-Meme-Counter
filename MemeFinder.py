@@ -29,7 +29,7 @@ while 1:
     raw_comments = list(getComments())
 
     # searches comments for keywords
-    for comment in raw_comments:
+    for comment.lower() in raw_comments:
         for word in nltk.word_tokenize(comment):
             if word in memeHash:
                 # if keyword is found, search for substrings of keyword
