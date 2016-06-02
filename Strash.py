@@ -1,14 +1,18 @@
+'''
+This algorithm takes a list of phrases, and dynamically determines
+keywords for a real language referentiable hash table, to be used for
+searching natural language strings for phrases without having to resort
+to search for each substring.
 
-# this algorithm takes a list of strings and dynamically finds and
-# assigns them keywords by content, and returns a sorted dictornary
-
+By Tyler Sullivan and Alex Hildreth
+'''
 import nltk
 
 def strash(raw_data):
-    
+
     raw_data = set([words.lower() for words in raw_data])# eliminate duplicates
     phrases = {}
-    
+
     # make quick and dirty groups to start parsing
     for phrase in raw_data:
         words = nltk.word_tokenize(phrase)
@@ -23,7 +27,7 @@ def strash(raw_data):
                     stored = True
 
     print(phrases)
-    
+
     shuffled = True
     while (shuffled):
         shuffled = False
@@ -57,8 +61,8 @@ def strash(raw_data):
                                         for other_phrase in phrases[other_key]:
                                             phrases[word].append(other_phrase)
                                             phrases[other_key].remove(other_phrase)
-                                            
-                        # checks for sub group and strips                     
+
+                        # checks for sub group and strips
                         elif alt_key_count > 1 and alt_key_count < len(phrases[key]) and word not in phrases:
                             shuffled = True
                             print("Stripping out " + phrase + " and " + str(alt_key_count))
@@ -72,7 +76,7 @@ def strash(raw_data):
             # if any groups are now empty, remove them
             if len(phrases[key]) < 1:
                 phrases.pop(key)
-                
+
         # if there have been changes, see if any of the solo phrases fit new keys
         if shuffled == False:
             temp_phrases = dict(phrases)
@@ -87,10 +91,10 @@ def strash(raw_data):
                             phrases.pop(key)
                             shuffled = True
                             break
-        
+
         print("\n")
         for key in phrases:
             print(key + " : " + str(phrases[key]))
         print("\n")
-                        
+
     return phrases

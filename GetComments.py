@@ -1,5 +1,7 @@
 '''
 This code grabs the comments from the reddit comment stream using praw.
+
+By Tyler Sullivan and Alex Hildreth
 '''
 
 
@@ -19,8 +21,3 @@ def getComments():
         if len(comments) > 100:
             return comments
             break
-
-
-comments = getComments()
-for comment in comments:
-    print(comment)
