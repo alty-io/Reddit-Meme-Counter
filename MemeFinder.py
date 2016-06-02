@@ -23,26 +23,29 @@ from ListParser import listParser
 
 memeHash = dict(listParser("memes.csv"))
 memeCount = dict()
+testcount = 10
 
 # set up loop for gathering comments and searching them for memes
-while 1:
-    raw_comments = list(getComments())
-
-    # searches comments for keywords
-    for comment.lower() in raw_comments:
-        for word in nltk.word_tokenize(comment):
-            if word in memeHash:
-                # if keyword is found, search for substrings of keyword
-                for phrase in memeHash[word]:
-                    if phrase in comment:
-                        # if the substring is in the comment, log the counter dictionary
-                        if phrase in memeCount:
-                            memeCount[phrase] += 1
-                        else:
-                            memeCount[phrase] = 1
-
-    # saves the counts to a log file
-    with open("meme_log.csv", "w") as logfile:
-        wr = csv.writer(logfile)
+count = 0
+with open("meme_log.csv", "w") as logfile:
+    wr = csv.writer(logfile)
+    while count < testcount:
+        raw_comments = list(getComments())
+        # searches comments for keywords
+        for comment in raw_comments:
+            comment = str(comment)
+            for word in nltk.word_tokenize(comment):
+                if word in memeHash:
+                    # if keyword is found, search for substrings of keyword
+                    for phrase in memeHash[word]:
+                        if phrase in comment:
+                            # if the substring is in the comment, log the counter dictionary
+                            if phrase in memeCount:
+                                memeCount[phrase] += 1
+                            else:
+                                memeCount[phrase] = 1
+    
         for phrase in memeCount:
+            print(phrase + str(memeCount[phrase]))
             wr.writerow([phrase, memeCount[phrase]])
+        count += 1

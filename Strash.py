@@ -57,7 +57,8 @@ def strash(raw_data):
                                             phrases[word].append(phrase)
                                         else:
                                             phrases[word] = [phrase]
-                                        phrases[key].remove(phrase)
+                                        if phrase in phrases[key]:
+                                            phrases[key].remove(phrase)
                                         for other_phrase in phrases[other_key]:
                                             phrases[word].append(other_phrase)
                                             phrases[other_key].remove(other_phrase)
@@ -65,7 +66,7 @@ def strash(raw_data):
                         # checks for sub group and strips
                         elif alt_key_count > 1 and alt_key_count < len(phrases[key]) and word not in phrases:
                             shuffled = True
-                            print("Stripping out " + phrase + " and " + str(alt_key_count))
+                            print("Stripping out " + phrase + " and " + str(alt_key_count - 1) + " from " + key + " to " + word)
                             for m_phrase in phrases[key]:
                                 if word in m_phrase:
                                     if word in phrases:
