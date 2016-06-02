@@ -27,6 +27,7 @@ testcount = 10
 
 # set up loop for gathering comments and searching them for memes
 count = 0
+meme_found = False
 with open("meme_log.csv", "w") as logfile:
     wr = csv.writer(logfile)
     while count < testcount:
@@ -36,9 +37,12 @@ with open("meme_log.csv", "w") as logfile:
             comment = str(comment)
             for word in nltk.word_tokenize(comment):
                 if word in memeHash:
+                    #print("found keyword")
                     # if keyword is found, search for substrings of keyword
                     for phrase in memeHash[word]:
                         if phrase in comment:
+                            print("found meme")
+                            meme_found = True
                             # if the substring is in the comment, log the counter dictionary
                             if phrase in memeCount:
                                 memeCount[phrase] += 1
@@ -48,4 +52,7 @@ with open("meme_log.csv", "w") as logfile:
         for phrase in memeCount:
             print(phrase + str(memeCount[phrase]))
             wr.writerow([phrase, memeCount[phrase]])
-        count += 1
+        
+        if meme_found:
+            break
+        #count += 1
