@@ -94,7 +94,12 @@ def strash(raw_data, old_phrases):
             for key in temp_phrases:
                 if len(phrases[key]) == 1:
                     print("Finding match for " + str(phrases[key]))
-                    for word in nltk.word_tokenize(phrases[key][0]):
+                    words = set(nltk.word_tokenize(phrases[key][0]))
+                    if (words - swords):
+                        words -= swords
+                    else:
+                        words = words
+                    for word in words:
                         print("  Checking " + word)
                         if word in phrases and word != key:
                             print("      Found word" )
@@ -106,18 +111,27 @@ def strash(raw_data, old_phrases):
                         print("Finding solitary match for " + str(phrases[key]))
                         for word in nltk.word_tokenize(phrases[key][0]):
                             for alt_key in temp_phrases:
-                                if alt_key != key:
-                                    if word in phrases[alt_key][0]:
+                                if alt_key != key and len(phrases[alt_key]) == 1:
+                                    print(alt_key, "not", key)
+                                    print("Checking", phrases[alt_key], "for", word)
+                                    words = set(nltk.word_tokenize(phrases[alt_key][0]))
+                                    if (words - swords):
+                                        words -= swords
+                                    else:
+                                        words = words
+                                    if word in words:
                                         print("    Found word")
-                                        if word in phrases:
-                                            phrases[word].append(phrases[key][0])
-                                        else:
-                                            phrases[word] = [phrases[key][0]]
-                                        phrases.pop(key)
-                                        phrases[word].append(phrases[alt_key][0])
-                                        phrases.pop(alt_key)
+                                        first = phrases.pop(key)
+                                        second = phrases.pop(alt_key)
+                                        phrases[word] = list()
+                                        phrases[word].extend(first)
+                                        phrases[word].extend(second)
                                         shuffled = True
                                         break
+                            if shuffled == True:
+                                break
+                if shuffled == True:
+                    break
 
 
 
