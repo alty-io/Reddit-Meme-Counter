@@ -15,7 +15,7 @@ def listParser(filename):
         memes = list()
         for row in rd:
             memes.extend(row)
-        # hashes the list of phrases using the string hasher
-        hashed_memes = dict(strash(memes))
+        # hashes the list of phrases using the string hasher and empty dict for "old phrases" parameter
+        hashed_memes = dict(strash(memes, {}))
     #returns hashed dictionary
     return hashed_memes

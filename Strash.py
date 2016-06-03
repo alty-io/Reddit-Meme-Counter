@@ -8,10 +8,12 @@ By Tyler Sullivan and Alex Hildreth
 '''
 import nltk
 
-def strash(raw_data):
+def strash(raw_data, old_phrases):
+
+
 
     raw_data = set([words.lower() for words in raw_data])# eliminate duplicates
-    phrases = {}
+    phrases = old_phrases
     swords = set(nltk.corpus.stopwords.words(fileids = "english"))
 
     # make quick and dirty groups to start parsing
