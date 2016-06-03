@@ -12,10 +12,15 @@ def strash(raw_data):
 
     raw_data = set([words.lower() for words in raw_data])# eliminate duplicates
     phrases = {}
+    swords = set(nltk.corpus.stopwords.words(fileids = "english"))
 
     # make quick and dirty groups to start parsing
     for phrase in raw_data:
-        words = nltk.word_tokenize(phrase)
+        words = set(nltk.word_tokenize(phrase))
+        if (words - swords):
+            words -= swords
+        else:
+            words = words
         stored = False
         for word in words:
             if not stored:
@@ -36,7 +41,12 @@ def strash(raw_data):
         for key in temp_phrases:
             if(len(phrases[key]) > 1):
                 for phrase in phrases[key]:
-                    for word in nltk.word_tokenize(phrase):
+                    words = set(nltk.word_tokenize(phrase))
+                    if (words - swords):
+                        words -= swords
+                    else:
+                        words = words
+                    for word in words:
                         alt_key_count = 0
                         for other_phrase in phrases[key]:
                             if word in other_phrase:
