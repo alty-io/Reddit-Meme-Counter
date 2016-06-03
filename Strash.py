@@ -10,8 +10,6 @@ import nltk
 
 def strash(raw_data, old_phrases):
 
-
-
     raw_data = set([words.lower() for words in raw_data])# eliminate duplicates
     phrases = old_phrases
     swords = set(nltk.corpus.stopwords.words(fileids = "english"))
@@ -104,6 +102,25 @@ def strash(raw_data, old_phrases):
                             phrases.pop(key)
                             shuffled = True
                             break
+                    if shuffled == False:
+                        print("Finding solitary match for " + str(phrases[key]))
+                        for word in nltk.word_tokenize(phrases[key][0]):
+                            for alt_key in temp_phrases:
+                                if alt_key != key:
+                                    if word in phrases[alt_key][0]:
+                                        print("    Found word")
+                                        if word in phrases:
+                                            phrases[word].append(phrases[key][0])
+                                        else:
+                                            phrases[word] = [phrases[key][0]]
+                                        phrases.pop(key)
+                                        phrases[word].append(phrases[alt_key][0])
+                                        phrases.pop(alt_key)
+                                        shuffled = True
+                                        break
+
+
+
 
         print("\n")
         for key in phrases:
