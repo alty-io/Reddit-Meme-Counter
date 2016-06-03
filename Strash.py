@@ -112,8 +112,6 @@ def strash(raw_data, old_phrases):
                         for word in nltk.word_tokenize(phrases[key][0]):
                             for alt_key in temp_phrases:
                                 if alt_key != key and len(phrases[alt_key]) == 1:
-                                    print(alt_key, "not", key)
-                                    print("Checking", phrases[alt_key], "for", word)
                                     words = set(nltk.word_tokenize(phrases[alt_key][0]))
                                     if (words - swords):
                                         words -= swords
