@@ -15,7 +15,7 @@ def getComments():
 
     comments = list()
 
-    for comment in comment_stream(r, 'all', limit=100):
+    for comment in comment_stream(r, 'all', limit=100000):
         comments.append(comment)
 
         if len(comments) > 100:
